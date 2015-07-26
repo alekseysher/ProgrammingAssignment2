@@ -11,13 +11,13 @@
 #
 #set the matrix  (set)
 #get the matrix  (get)
-#set the inverse matrix (getinverse)
-#get the inverse matrix (setinverse)
+#set the inverse matrix (setinverse)
+#get the inverse matrix (getinverse)
 
 makeCacheMatrix <- function(x = matrix()) {
-
-     invm <- NULL
 # set the matrix and NULL the inverse(invm)
+     invm <- NULL
+
      set <- function(y)
 
       {
@@ -27,7 +27,7 @@ makeCacheMatrix <- function(x = matrix()) {
 	}
 # simply return the matrix
 	get <- function() x
-# way to write the inverse (invm)
+# way to write and keep the inverse (invm)
       setinverse <-function(inverse) invm <<-inverse
 # way to return the inverse 
      getinverse <- function() invm
@@ -45,9 +45,9 @@ makeCacheMatrix <- function(x = matrix()) {
 # assuming the matrix is invertable:
 
 cacheSolve <- function(x, ...) {
-# get the inverse
+# try to get the inverse matrix
            invm <- x$getinverse()
-# if it exists then return the inverted matrix that is cached
+# if it exists then return the inverted matrix that was cached
         if(!is.null(invm)) {
         message("getting the cached inverted matrix")
         return(invm)
@@ -68,32 +68,32 @@ cacheSolve <- function(x, ...) {
 #
 #  
 #
-# x<-rbind(c(1,3,4),c(0.4,1,0),c(4,0,4))
+# >x<-rbind(c(1,3,4),c(0.4,1,0),c(4,0,4))
 
-# matrix=makeCacheMatrix(x)
-# matrix$get()
+# >matrix=makeCacheMatrix(x)
+# >matrix$get()
 #     [,1] [,2] [,3]
 #[1,]  1.0    3    4
 #[2,]  0.4    1    0
 #[3,]  4.0    0    4
-# when solving the first time, the inverted matrix is calculated
-# cacheSolve(matrix)
+# when solving the first time, the inverted matrix is calculated:
+#> cacheSolve(matrix)
 #calculating inverted matrix
 #           [,1]       [,2]        [,3]
 #[1,] -0.2380952  0.7142857  0.23809524
 #[2,]  0.0952381  0.7142857 -0.09523810
 #[3,]  0.2380952 -0.7142857  0.01190476
 # when solving again, the cached data is used:
-# cacheSolve(matrix)
+# >cacheSolve(matrix)
 #getting the cached inverted matrix
 #           [,1]       [,2]        [,3]
 #[1,] -0.2380952  0.7142857  0.23809524
 #[2,]  0.0952381  0.7142857 -0.09523810
 #[3,]  0.2380952 -0.7142857  0.01190476
 # then I've decided to set the inverse as the matrix
-# matrix$set(cacheSolve(matrix))
+# >matrix$set(cacheSolve(matrix))
 # and afterwards solve it again:
-# cacheSolve(matrix)
+# >cacheSolve(matrix)
 #calculating inverted matrix
 #     [,1] [,2]         [,3]
 #[1,]  1.0    3 4.000000e+00
